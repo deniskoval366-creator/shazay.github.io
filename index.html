@@ -3,285 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shazay — Diamond Filtered Haircare</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Преміальний Догляд Для Волосся | Фільтрація Алмазами</title>
+    <!-- Tailwind CSS для стилізації та сіток -->
+    <script src="https://tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandDark: '#111111',
+                        brandGold: '#c5a880',
+                        brandGray: '#f9f9f9',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background-color: #f5f5f4; color: #1c1917; line-height: 1.5; -webkit-font-smoothing: antialiased; }
-        a { text-decoration: none; color: inherit; }
-        
-        /* Акційний банер */
-        .promo-bar { background-color: #0c0a09; color: #ffffff; text-align: center; padding: 10px 16px; font-size: 13px; font-weight: 500; letter-spacing: 0.5px; }
-        .promo-bar span { font-weight: 600; color: #d6d3d1; text-decoration: underline; }
-
-        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-        .header { position: sticky; top: 0; z-index: 50; background-color: rgba(245, 245, 244, 0.85); backdrop-filter: blur(8px); border-bottom: 1px solid #e7e5e4; }
-        .header-body { display: flex; align-items: center; justify-content: space-between; height: 80px; }
-        .logo { font-size: 20px; font-weight: 600; letter-spacing: 2px; color: #0c0a09; }
-        .nav { display: flex; gap: 32px; font-size: 14px; font-weight: 500; color: #57534e; }
-        .badge { font-size: 12px; text-transform: uppercase; color: #a8a29e; letter-spacing: 1px; }
-
-        /* Hero Section з робочим фото */
-        .hero { position: relative; background-color: #0c0a09; min-height: 70vh; display: flex; align-items: center; overflow: hidden; }
-        .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 1; }
-        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(12,10,9,0.75) 0%, rgba(12,10,9,0.3) 60%, rgba(12,10,9,0) 100%); z-index: 2; }
-        .hero-content { position: relative; z-index: 10; max-width: 640px; padding: 40px 0; color: #ffffff; }
-        .subtitle { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #d6d3d1; font-weight: 500; margin-bottom: 16px; display: block; }
-        .hero h1 { font-size: 48px; font-weight: 300; color: #ffffff; line-height: 1.2; margin-bottom: 24px; }
-        .hero h1 span { font-style: italic; font-weight: 400; }
-        .hero p { font-size: 18px; color: #e7e5e4; margin-bottom: 32px; }
-        
-        /* Кнопки */
-        .btn { display: inline-flex; align-items: center; justify-content: center; background-color: #ffffff; color: #0c0a09; font-size: 14px; font-weight: 500; padding: 14px 24px; border: none; cursor: pointer; transition: background-color 0.2s ease; }
-        .btn:hover { background-color: #e7e5e4; }
-        .btn-dark { background-color: #0c0a09; color: #ffffff; }
-        .btn-dark:hover { background-color: #292524; }
-
-        /* Секції та сітка */
-        .section { padding: 86px 0; }
-        .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #a8a29e; font-weight: 500; margin-bottom: 8px; display: block; }
-        .section h2 { font-size: 32px; font-weight: 300; color: #0c0a09; margin-bottom: 48px; }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; }
-        
-        /* Карточки товарів */
-        .product-card { position: relative; display: flex; flex-direction: column; background-color: #ffffff; border: 1px solid #e7e5e4; padding: 24px; border-radius: 4px; }
-        .discount-badge { position: absolute; top: 16px; right: 16px; background-color: #0c0a09; color: #ffffff; font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 2px; z-index: 5; }
-        .product-img-wrapper { aspect-ratio: 1/1; background-color: #fafaf9; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .product-img { width: 100%; height: 100%; object-fit: cover; }
-        .product-tag { font-size: 12px; color: #a8a29e; text-transform: uppercase; margin-bottom: 4px; }
-        .product-title { font-size: 16px; font-weight: 500; color: #0c0a09; margin-bottom: 8px; }
-        .product-desc { font-size: 14px; color: #57534e; margin-bottom: 24px; flex-grow: 1; }
-        .product-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid #f5f5f4; }
-        .price-box { display: flex; flex-direction: column; }
-        .old-price { font-size: 12px; text-decoration: line-through; color: #a8a29e; }
-        .product-price { font-size: 16px; font-weight: 600; color: #0c0a09; }
-        .btn-sm { font-size: 12px; padding: 8px 16px; text-transform: uppercase; }
-
-        /* Додаткові блоки */
-        .bg-dark { background-color: #1c1917; color: #f5f5f4; }
-        .bg-dark .section-title { color: #57534e; }
-        .bg-dark h2 { color: #ffffff; }
-        .tech-layout { display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center; }
-        @media (min-width: 1024px) { .tech-layout { grid-template-columns: 1fr 1fr; } }
-        .tech-text p { color: #a8a29e; margin-bottom: 16px; font-size: 16px; }
-        .tech-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .tech-img-box { aspect-ratio: 4/5; background-color: #292524; overflow: hidden; position: relative; border-radius: 4px; }
-        .tech-img { width: 100%; height: 100%; object-fit: cover; }
-        .tech-img-lbl { position: absolute; bottom: 16px; left: 16px; font-size: 12px; text-transform: uppercase; color: #ffffff; background-color: rgba(12, 10, 9, 0.6); padding: 4px 8px; }
-        
-        .about-layout { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
-        @media (min-width: 1024px) { .about-layout { grid-template-columns: 5fr 7fr; } }
-        .about-img-box { aspect-ratio: 3/4; background-color: #e7e5e4; overflow: hidden; border-radius: 4px; }
-        .about-img { width: 100%; height: 100%; object-fit: cover; }
-        .quote { font-size: 20px; font-style: italic; color: #44403c; border-left: 2px solid #d6d3d1; padding-left: 24px; margin-bottom: 24px; }
-        
-        .bg-stone { background-color: #e7e5e4; text-align: center; }
-        .delivery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
-        .delivery-card { background-color: #ffffff; border: 1px solid #d6d3d1; padding: 32px; border-radius: 4px; }
-        .delivery-time { font-size: 28px; font-weight: 300; color: #0c0a09; margin-bottom: 16px; }
-        
-        .footer { background-color: #0c0a09; color: #a8a29e; padding: 48px 0; }
-        .footer-body { display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 24px; }
-        @media (min-width: 640px) { .footer-body { flex-direction: row; } }
-        .footer-links { display: flex; gap: 24px; font-size: 12px; text-transform: uppercase; }
-        
-        @media (max-width: 768px) { .header .nav { display: none; } }
+        body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body>
+<body class="bg-white text-brandDark antialiased">
 
-    <!-- Акційний банер -->
-    <div class="promo-bar">
-        Ексклюзивна пропозиція: <span>-20% знижки</span> на все за промокодом <strong>DIAMOND20</strong>
-    </div>
+    <!-- НАВІГАЦІЙНА ПАНЕЛЬ (HEADER) -->
+    <header class="sticky top-0 z-40 bg-white border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Бургер-меню для мобільних -->
+            <button class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
 
-    <!-- Шапка -->
-    <header class="header">
-        <div class="container header-body">
-            <div class="logo">SHAZAY</div>
-            <nav class="nav">
-                <a href="#products">Продукти</a>
-                <a href="#technology">Технологія</a>
-                <a href="#about">Про бренд</a>
-                <a href="#delivery">Доставка</a>
+            <!-- Логотип бренду -->
+            <div class="text-xl font-bold tracking-widest uppercase">
+                <a href="#">SHAZAY <span class="text-xs block text-gray-400 font-light tracking-normal -mt-1">diamond filtered</span></a>
+            </div>
+
+            <!-- Десктопна навігація -->
+            <nav class="hidden md:flex space-x-8 text-xs font-medium tracking-widest uppercase">
+                <a href="#products" class="hover:text-brandGold transition">Продукти</a>
+                <a href="#philosophy" class="hover:text-brandGold transition">Філософія</a>
+                <a href="#headspa" class="hover:text-brandGold transition">HeadSpa</a>
+                <a href="#reviews" class="hover:text-brandGold transition">Відгуки</a>
             </nav>
-            <div class="badge">Made in Germany</div>
+
+            <!-- Інструменти (Пошук, Профіль, Кошик) -->
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleSearchModal()" class="text-gray-700 hover:text-brandGold transition focus:outline-none">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </button>
+                <button onclick="toggleCart()" class="relative text-gray-700 hover:text-brandGold transition focus:outline-none">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-brandGold text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- Головна секція з фотографією -->
-    <section class="hero">
-        <img src="hero.jpg" class="hero-bg" alt="Shazay Concept">
-        <div class="hero-overlay"></div>
-        <div class="container">
-            <div class="hero-content">
-                <span class="subtitle">Diamond Filtered</span>
-                <h1>Догляд, пропущений через <span>діамант</span></h1>
-                <p>Shazay очищує воду через алмазний фільтр перед тим, як вона потрапляє у формулу — так кожна крапля засобу працює з волоссям м'якше та ефективніше.</p>
-                <a href="#products" class="btn">Дивитися продукти зі знижкою →</a>
+    <!-- ГОЛОВНИЙ БАНЕР (HERO BANNER) — ЗАМІНЕНО НА ВАШЕ ФОТО СО СПРЕЄМ -->
+    <section class="relative h-[80vh] bg-cover bg-center flex items-center justify-center" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('image_miqH0z.png');">
+        <div class="text-center text-white px-4">
+            <p class="text-xs uppercase tracking-[0.3em] mb-4 font-light">Догляд, фільтрований алмазами</p>
+            <h1 class="text-3xl sm:text-5xl md:text-6xl font-light uppercase tracking-wide leading-tight mb-8">
+                Люкс для вас <br class="hidden sm:inline"> та вашого волосся
+            </h1>
+            <a href="#products" class="inline-block bg-white text-brandDark text-xs font-semibold tracking-widest uppercase px-8 py-4 hover:bg-brandGold hover:text-white transition duration-300">
+                Дивитися колекцію
+            </a>
+        </div>
+    </section>
+
+    <!-- СЕКЦІЯ ЛОГОТИПІВ ПАРТНЕРІВ -->
+    <section class="bg-brandGray py-10 border-b border-gray-100 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-6 font-semibold">Готелі та салони, що обирають нас</p>
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale text-xs font-medium uppercase tracking-widest">
+                <span>Mandarin Oriental</span>
+                <span>Sofitel</span>
+                <span>Kimpton Hotels</span>
+                <span>St. Regis</span>
+                <span>MGM Grand</span>
             </div>
         </div>
     </section>
 
-    <!-- Каталог продуктів зі знижками -->
-    <section id="products" class="section">
-        <div class="container">
-            <span class="section-title">Лінійка</span>
-            <h2>Преміальний ритуал догляду зі знижкою 20%</h2>
-
-            <div class="products-grid">
-                <!-- Товар 1 -->
-                <div class="product-card">
-                    <span class="discount-badge">-20%</span>
-                    <div class="product-img-wrapper">
-                        <img src="product1.jpg" class="product-img" alt="Leave-In">
-                    </div>
-                    <span class="product-tag">Leave-in</span>
-                    <h3 class="product-title">Moisturizing Leave-In Conditioner</h3>
-                    <p class="product-desc">Незмивний догляд для зволоження по всій довжині без обтяження волосся.</p>
-                    <div class="product-footer">
-                        <div class="price-box">
-                            <span class="old-price">1 890 ₴</span>
-                            <span class="product-price">1 512 ₴</span>
-                        </div>
-                        <button class="btn btn-dark btn-sm">У кошик</button>
-                    </div>
-                </div>
-
-                <!-- Товар 2 -->
-                <div class="product-card">
-                    <span class="discount-badge">-20%</span>
-                    <div class="product-img-wrapper">
-                        <img src="product1.jpg" class="product-img" alt="Conditioner">
-                    </div>
-                    <span class="product-tag">Conditioner</span>
-                    <h3 class="product-title">Precious Softening Conditioner</h3>
-                    <p class="product-desc">Змивний кондиціонер для м'якості та легкого розчісування після миття.</p>
-                    <div class="product-footer">
-                        <div class="price-box">
-                            <span class="old-price">1 690 ₴</span>
-                            <span class="product-price">1 352 ₴</span>
-                        </div>
-                        <button class="btn btn-dark btn-sm">У кошик</button>
-                    </div>
-                </div>
-
-                <!-- Товар 3 -->
-                <div class="product-card">
-                    <span class="discount-badge">-20%</span>
-                    <div class="product-img-wrapper">
-                        <img src="product2.jpg" class="product-img" alt="Masque">
-                    </div>
-                    <span class="product-tag">Masque</span>
-                    <h3 class="product-title">Delicate Therapy Masque</h3>
-                    <p class="product-desc">Інтенсивна маска глибокого відновлення для сухих та ослаблених волосся.</p>
-                    <div class="product-footer">
-                        <div class="price-box">
-                            <span class="old-price">2 290 ₴</span>
-                            <span class="product-price">1 832 ₴</span>
-                        </div>
-                        <button class="btn btn-dark btn-sm">У кошик</button>
-                    </div>
-                </div>
-
-                <!-- Товар 4 -->
-                <div class="product-card">
-                    <span class="discount-badge">-20%</span>
-                    <div class="product-img-wrapper">
-                        <img src="product1.jpg" class="product-img" alt="Mist">
-                    </div>
-                    <span class="product-tag">Mist</span>
-                    <h3 class="product-title">Premium Blow-Out Mist</h3>
-                    <p class="product-desc">Невагомий термозахисний спрей для бездоганного укладання та природного блиску.</p>
-                    <div class="product-footer">
-                        <div class="price-box">
-                            <span class="old-price">1 790 ₴</span>
-                            <span class="product-price">1 432 ₴</span>
-                        </div>
-                        <button class="btn btn-dark btn-sm">У кошик</button>
-                    </div>
-                </div>
-            </div>
+    <!-- СЕКЦІЯ ТОВАРІВ — ЗАМІНЕНО НА ВАШІ ОРИГІНАЛЬНІ ФОТО ТОВАРІВ -->
+    <section id="products" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="text-xs font-medium text-brandGold uppercase tracking-[0.2em] block mb-2">Наш вибір</span>
+            <h2 class="text-2xl sm:text-3xl font-light uppercase tracking-widest">Наші Бестселери</h2>
         </div>
-    </section>
 
-    <!-- Секція Технологія -->
-    <section id="technology" class="section bg-dark">
-        <div class="container">
-            <div class="tech-layout">
-                <div class="tech-text">
-                    <span class="section-title">Запатентна технологія</span>
-                    <h2>Діамантова фільтрація води</h2>
-                    <p>Вода є основою більшості косметичних засобів. Звичайна вода може містити мікродомішки, які знижують ефективність активних інгредієнтів.</p>
-                    <p>Shazay використовує інноваційну німецьку технологію алмазного фільтрування. Це дозволяє отримати кришталево чисту воду, яка ідеально засвоюється кожною волосиною.</p>
-                </div>
-                <div class="tech-gallery">
-                    <div class="tech-img-box">
-                        <img src="tech1.jpg" class="tech-img" alt="Diamond Filter">
-                        <span class="tech-img-lbl">Чистота</span>
-                    </div>
-                    <div class="tech-img-box">
-                        <img src="tech2.jpg" class="tech-img" alt="Lab Research">
-                        <span class="tech-img-lbl">Точність</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Про бренд -->
-    <section id="about" class="section">
-        <div class="container">
-            <div class="about-layout">
-                <div class="about-img-box">
-                    <img src="about.jpg" class="about-img" alt="Shazay Brand">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+            <!-- Товар 1: Leave-In Conditioner -->
+            <div class="group flex flex-col justify-between">
+                <div class="relative overflow-hidden bg-brandGray aspect-square mb-4">
+                    <img src="image_rVNv4U.png" alt="Moisturizing Leave-In Conditioner" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
+                    <span class="absolute top-3 left-3 bg-brandDark text-white text-[9px] uppercase tracking-wider px-2 py-1">Популярне</span>
                 </div>
                 <div>
-                    <span class="section-title">Філософія</span>
-                    <h2>Німецька якість та турбота про ваше волосся</h2>
-                    <p class="quote">«Ми створили Shazay для тих, хто шукає бездоганну якість без компромісів.»</p>
-                    <p style="color: #57534e;">Усі наші продукти розробляються та виготовляються в Німеччині. Вони не містять силіконів, парабенів та мікропластику, зберігаючи природну красу та здоров'я вашого волосся.</p>
+                    <p class="text-[11px] text-gray-400 uppercase tracking-wider mb-1">Об'єм: 200 мл</p>
+                    <h3 class="text-sm font-medium uppercase tracking-wider text-gray-900 min-h-[40px]">Moisturizing Leave-In Conditioner</h3>
+                    <p class="text-xs text-gray-500 mt-1 italic">Миттєве зволоження та захист</p>
+                    <p class="text-sm font-semibold mt-3 text-brandDark">39,00 €</p>
                 </div>
+                <button onclick="addToCart('Moisturizing Leave-In Conditioner', 39.00)" class="mt-4 w-full bg-brandDark text-white text-xs uppercase tracking-widest py-3 hover:bg-brandGold transition duration-300">
+                    У кошик
+                </button>
+            </div>
+
+            <!-- Товар 2: Delicate Therapy Masque -->
+            <div class="group flex flex-col justify-between">
+                <div class="relative overflow-hidden bg-brandGray aspect-square mb-4">
+                    <img src="image_8X5SdA.png" alt="Delicate Therapy Masque" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
+                </div>
+                <div>
+                    <p class="text-[11px] text-gray-400 uppercase tracking-wider mb-1">Об'єм: 150 мл</p>
+                    <h3 class="text-sm font-medium uppercase tracking-wider text-gray-900 min-h-[40px]">Delicate Therapy Masque</h3>
+                    <p class="text-xs text-gray-500 mt-1 italic">Інтенсивне зволоження та відновлення</p>
+                    <p class="text-sm font-semibold mt-3 text-brandDark">45,00 €</p>
+                </div>
+                <button onclick="addToCart('Delicate Therapy Masque', 45.00)" class="mt-4 w-full bg-brandDark text-white text-xs uppercase tracking-widest py-3 hover:bg-brandGold transition duration-300">
+                    У кошик
+                </button>
+            </div>
+
+            <!-- Товар 3: Precious Softening Conditioner -->
+            <div class="group flex flex-col justify-between">
+                <div class="relative overflow-hidden bg-brandGray aspect-square mb-4">
+                    <img src="image_d9uNTN.png" alt="Precious Softening Conditioner" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
+                </div>
+                <div>
+                    <p class="text-[11px] text-gray-400 uppercase tracking-wider mb-1">Об'єм: 200 мл</p>
+                    <h3 class="text-sm font-medium uppercase tracking-wider text-gray-900 min-h-[40px]">Precious Softening Conditioner</h3>
+                    <p class="text-xs text-gray-500 mt-1 italic">Невагомий догляд і шовковистість</p>
+                    <p class="text-sm font-semibold mt-3 text-brandDark">39,00 €</p>
+                </div>
+                <button onclick="addToCart('Precious Softening Conditioner', 39.00)" class="mt-4 w-full bg-brandDark text-white text-xs uppercase tracking-widest py-3 hover:bg-brandGold transition duration-300">
+                    У кошик
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- Умови доставки -->
-    <section id="delivery" class="section bg-stone">
-        <div class="container">
-            <span class="section-title">Сервіс</span>
-            <h2>Швидка та зручна доставка</h2>
-            <div class="delivery-grid" style="margin-top: 32px;">
-                <div class="delivery-card">
-                    <div class="delivery-time">1–3 дні</div>
-                    <h3>Доставка по Україні</h3>
-                    <p style="color: #57534e; margin-top: 8px; font-size: 14px;">Кур'єром або до відділення «Нова Пошта». Безкоштовно при замовленні від 2 000 ₴.</p>
-                </div>
-                <div class="delivery-card">
-                    <div class="delivery-time">Оплата</div>
-                    <h3>Зручний розрахунок</h3>
-                    <p style="color: #57534e; margin-top: 8px; font-size: 14px;">Оплата карткою на сайті онлайн або при отриманні у відділенні доставки.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Подвал (Footer) -->
-    <footer class="footer">
-        <div class="container footer-body">
-            <div class="logo" style="color: #ffffff;">SHAZAY</div>
-            <div class="footer-links">
-                <a href="#products">Продукти</a>
-                <a href="#technology">Технологія</a>
-                <a href="#about">Про бренд</a>
-            </div>
-            <div style="font-size: 12px; color: #78716c;">
-                © 2026 SHAZAY Haircare. Всі права захищено.
-            </div>
-        </div>
-    </footer>
-
-</body>
-</html>
+    <!-- СЕКЦІЯ ФІЛОСОФІЇ -->
+    <section id="philosophy" class="bg-brandGray py-20 border-t border-b border-gray-100">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <span class="text-xs font-semibold text-brandGold uppercase tracking-[0.2em] block mb-4">Винятковий догляд</span>
+            <h2 class="text-3xl font-light uppercase tracking-widest mb-6">У чому секрет та унікальність продуктів?</h2>
+            <p class="text-gray-600 font-light leading-relaxed max-w-2xl mx-auto text-sm sm:text-base">
