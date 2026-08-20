@@ -4,155 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Преміальний Догляд Для Волосся | Фільтрація Алмазами</title>
-    <!-- Tailwind CSS для стилізації та сіток -->
-    <script src="https://tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brandDark: '#111111',
-                        brandGold: '#c5a880',
-                        brandGray: '#f9f9f9',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
     <!-- Google Fonts -->
     <link href="https://googleapis.com" rel="stylesheet">
+    
+    <!-- Автономные адаптивные стили (не требуют CDN и интернета для загрузки сетки) -->
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        :root {
+            --brand-dark: #111111;
+            --brand-gold: #c5a880;
+            --brand-gray: #f9f9f9;
+            --text-muted: #71717a;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #ffffff; color: var(--brand-dark); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        
+        /* Шапка сайта */
+        .header { position: sticky; top: 0; z-index: 50; background: #ffffff; border-b: 1px solid #f4f4f5; height: 70px; display: flex; align-items: center; }
+        .header-container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { text-transform: uppercase; font-weight: 700; tracking-key: 0.1em; font-size: 1.1rem; text-decoration: none; color: var(--brand-dark); }
+        .logo span { display: block; font-size: 0.65rem; color: #a1a1aa; font-weight: 300; letter-spacing: 0; margin-top: -2px; }
+        
+        /* Навигация для десктопа */
+        .nav-desktop { display: none; gap: 30px; }
+        .nav-desktop a { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.15em; text-decoration: none; color: var(--brand-dark); transition: color 0.3s; }
+        .nav-desktop a:hover { color: var(--brand-gold); }
+        
+        /* Иконки и триггеры */
+        .header-actions { display: flex; align-items: center; gap: 15px; }
+        .icon-btn { background: none; border: none; cursor: pointer; color: var(--brand-dark); position: relative; padding: 8px; min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; }
+        .icon-btn:hover { color: var(--brand-gold); }
+        .cart-badge { position: absolute; top: 2px; right: 2px; background: var(--brand-gold); color: white; font-size: 0.65rem; font-weight: bold; width: 16px; height: 16px; rounded-circle: 50%; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        
+        /* Бургер-кнопка */
+        .burger-btn { display: flex; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 10px; min-width: 48px; min-height: 48px; justify-content: center; }
+        .burger-line { width: 22px; height: 2px; background-color: var(--brand-dark); transition: 0.3s; }
+
+        /* Мобильное меню (Выезжающее) */
+        .mobile-menu { position: fixed; top: 0; left: -100%; width: 85%; max-width: 320px; height: 100vh; background: #ffffff; z-index: 100; box-shadow: 5px 0 15px rgba(0,0,0,0.1); transition: left 0.4s ease; padding: 40px 24px; display: flex; flex-direction: column; gap: 24px; }
+        .mobile-menu.active { left: 0; }
+        .mobile-menu a { font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; color: var(--brand-dark); padding: 8px 0; border-b: 1px solid #f4f4f5; }
+        .menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 90; display: none; }
+        .menu-overlay.active { display: block; }
+        .close-menu { align-self: flex-end; font-size: 1.5rem; background: none; border: none; cursor: pointer; margin-bottom: 20px; min-height: 48px; min-width: 48px; }
+
+        /* Главный баннер (Hero) */
+        .hero { relative: position; height: 65vh; min-height: 400px; background: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)), url('image_miqH0z.png') center/cover no-repeat; display: flex; align-items: center; justify-content: center; text-align: center; color: #ffffff; padding: 20px; }
+        .hero-content { max-width: 600px; }
+        .hero-subtitle { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 12px; font-weight: 300; }
+        .hero-title { font-size: 1.85rem; font-weight: 300; text-transform: uppercase; letter-spacing: 0.05em; line-height: 1.3; margin-bottom: 24px; }
+        .btn-primary { display: inline-block; background: #ffffff; color: var(--brand-dark); text-transform: uppercase; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; padding: 14px 28px; text-decoration: none; transition: 0.3s; border: none; cursor: pointer; }
+        .btn-primary:hover { background: var(--brand-gold); color: #ffffff; }
+
+        /* Секция бестселлеров и сетка */
+        .section-padding { padding: 60px 20px; max-width: 1280px; margin: 0 auto; }
+        .section-title-block { text-align: center; margin-bottom: 40px; }
+        .section-subtitle { font-size: 0.7rem; font-weight: 600; color: var(--brand-gold); text-transform: uppercase; letter-spacing: 0.15em; display: block; margin-bottom: 6px; }
+        .section-title { font-size: 1.6rem; font-weight: 300; text-transform: uppercase; letter-spacing: 0.1em; }
+        
+        .products-grid { display: grid; grid-template-columns: 1fr; gap: 40px 20px; }
+        
+        /* Карточка товара */
+        .product-card { display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+        .product-img-wrapper { width: 100%; aspect-ratio: 3/4; background: var(--brand-gray); overflow: hidden; position: relative; margin-bottom: 15px; }
+        .product-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .product-card:hover .product-img-wrapper img { transform: scale(1.03); }
+        .product-badge { position: absolute; top: 12px; left: 12px; background: var(--brand-dark); color: white; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 4px 8px; font-weight: 500; }
+        
+        .product-meta { font-size: 0.65rem; color: #a1a1aa; text-transform: uppercase; tracking: 0.05em; margin-bottom: 4px; }
+        .product-name { font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--brand-dark); margin-bottom: 4px; min-height: 36px; }
+        .product-desc { font-size: 0.75rem; color: var(--text-muted); font-style: italic; margin-bottom: 10px; }
+        .product-price { font-size: 0.9rem; font-weight: 600; color: var(--brand-dark); }
+        
+        .btn-submit { width: 100%; background: var(--brand-dark); color: #ffffff; border: none; text-transform: uppercase; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; padding: 14px; margin-top: 15px; cursor: pointer; transition: background 0.3s; min-height: 48px; }
+        .btn-submit:hover { background: var(--brand-gold); }
+
+        /* Боковая панель корзины (Drawer) */
+        .cart-drawer { position: fixed; inset: 0; z-index: 110; display: none; }
+        .cart-drawer.active { display: block; }
+        .cart-blur { position: absolute; inset: 0; background: rgba(0,0,0,0.5); }
+        .cart-content { position: absolute; top: 0; right: 0; width: 100%; max-width: 400px; height: 100%; background: #ffffff; box-shadow: -5px 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: space-between; padding: 24px; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; border-b: 1px solid #e4e4e7; padding-bottom: 15px; }
+        .cart-header h2 { font-size: 1.1rem; font-weight: 500; }
+        .cart-items { flex: 1; overflow-y: auto; padding: 20px 0; }
+        .cart-empty { text-align: center; color: #a1a1aa; font-size: 0.8rem; margin-top: 40px; line-height: 1.6; }
+        .cart-footer { border-t: 1px solid #e4e4e7; pt: 15px; padding-top: 15px; background: var(--brand-gray); margin: 0 -24px -24px -24px; padding: 20px 24px; }
+        .cart-total-row { display: flex; justify-content: space-between; font-weight: 500; font-size: 0.95rem; margin-bottom: 15px; }
+        
+        /* Медиа-запросы для планшетов и десктопов */
+        @media (min-width: 640px) {
+            .products-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero { height: 75vh; }
+            .hero-title { font-size: 2.5rem; }
+        }
+        @media (min-width: 1024px) {
+            .nav-desktop { display: flex; }
+            .burger-btn { display: none; }
+            .products-grid { grid-template-columns: repeat(3, 1fr); }
+            .hero-title { font-size: 3.2rem; }
+            .section-padding { padding: 80px 40px; }
+        }
     </style>
 </head>
-<body class="bg-white text-brandDark antialiased">
+<body>
 
-    <!-- НАВІГАЦІЙНА ПАНЕЛЬ (HEADER) -->
-    <header class="sticky top-0 z-40 bg-white border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Бургер-меню для мобільних -->
-            <button class="md:hidden text-gray-700 focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+    <!-- НАВІГАЦІЙНА ПАНЕЛЬ -->
+    <header class="header">
+        <div class="header-container">
+            <!-- Бургер-меню для мобільних (Покращено для тачу) -->
+            <button class="burger-btn" onclick="toggleMobileMenu()" aria-label="Меню">
+                <div class="burger-line"></div>
+                <div class="burger-line" style="margin-top: 4px; margin-bottom: 4px;"></div>
+                <div class="burger-line"></div>
             </button>
 
             <!-- Логотип бренду -->
-            <div class="text-xl font-bold tracking-widest uppercase">
-                <a href="#">SHAZAY <span class="text-xs block text-gray-400 font-light tracking-normal -mt-1">diamond filtered</span></a>
-            </div>
+            <a href="#" class="logo">
+                SHAZAY <span>diamond filtered</span>
+            </a>
 
             <!-- Десктопна навігація -->
-            <nav class="hidden md:flex space-x-8 text-xs font-medium tracking-widest uppercase">
-                <a href="#products" class="hover:text-brandGold transition">Продукти</a>
-                <a href="#philosophy" class="hover:text-brandGold transition">Філософія</a>
-                <a href="#headspa" class="hover:text-brandGold transition">HeadSpa</a>
-                <a href="#reviews" class="hover:text-brandGold transition">Відгуки</a>
+            <nav class="nav-desktop">
+                <a href="#products">Продукти</a>
+                <a href="#philosophy">Філософія</a>
+                <a href="#headspa">HeadSpa</a>
+                <a href="#reviews">Відгуки</a>
             </nav>
 
-            <!-- Інструменти (Пошук, Профіль, Кошик) -->
-            <div class="flex items-center space-x-4">
-                <button onclick="toggleSearchModal()" class="text-gray-700 hover:text-brandGold transition focus:outline-none">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                </button>
-                <button onclick="toggleCart()" class="relative text-gray-700 hover:text-brandGold transition focus:outline-none">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                    <span id="cart-count" class="absolute -top-2 -right-2 bg-brandGold text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- ГОЛОВНИЙ БАНЕР (HERO BANNER) — ЗАМІНЕНО НА ВАШЕ ФОТО СО СПРЕЄМ -->
-    <section class="relative h-[80vh] bg-cover bg-center flex items-center justify-center" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('image_miqH0z.png');">
-        <div class="text-center text-white px-4">
-            <p class="text-xs uppercase tracking-[0.3em] mb-4 font-light">Догляд, фільтрований алмазами</p>
-            <h1 class="text-3xl sm:text-5xl md:text-6xl font-light uppercase tracking-wide leading-tight mb-8">
-                Люкс для вас <br class="hidden sm:inline"> та вашого волосся
-            </h1>
-            <a href="#products" class="inline-block bg-white text-brandDark text-xs font-semibold tracking-widest uppercase px-8 py-4 hover:bg-brandGold hover:text-white transition duration-300">
-                Дивитися колекцію
-            </a>
-        </div>
-    </section>
-
-    <!-- СЕКЦІЯ ЛОГОТИПІВ ПАРТНЕРІВ -->
-    <section class="bg-brandGray py-10 border-b border-gray-100 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-6 font-semibold">Готелі та салони, що обирають нас</p>
-            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale text-xs font-medium uppercase tracking-widest">
-                <span>Mandarin Oriental</span>
-                <span>Sofitel</span>
-                <span>Kimpton Hotels</span>
-                <span>St. Regis</span>
-                <span>MGM Grand</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- СЕКЦІЯ ТОВАРІВ — ЗАМІНЕНО НА ВАШІ ОРИГІНАЛЬНІ ФОТО ТОВАРІВ -->
-    <section id="products" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <span class="text-xs font-medium text-brandGold uppercase tracking-[0.2em] block mb-2">Наш вибір</span>
-            <h2 class="text-2xl sm:text-3xl font-light uppercase tracking-widest">Наші Бестселери</h2>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-            <!-- Товар 1: Leave-In Conditioner -->
-            <div class="group flex flex-col justify-between">
-                <div class="relative overflow-hidden bg-brandGray aspect-square mb-4">
-                    <img src="image_rVNv4U.png" alt="Moisturizing Leave-In Conditioner" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
-                    <span class="absolute top-3 left-3 bg-brandDark text-white text-[9px] uppercase tracking-wider px-2 py-1">Популярне</span>
-                </div>
-                <div>
-                    <p class="text-[11px] text-gray-400 uppercase tracking-wider mb-1">Об'єм: 200 мл</p>
-                    <h3 class="text-sm font-medium uppercase tracking-wider text-gray-900 min-h-[40px]">Moisturizing Leave-In Conditioner</h3>
-                    <p class="text-xs text-gray-500 mt-1 italic">Миттєве зволоження та захист</p>
-                    <p class="text-sm font-semibold mt-3 text-brandDark">39,00 €</p>
-                </div>
-                <button onclick="addToCart('Moisturizing Leave-In Conditioner', 39.00)" class="mt-4 w-full bg-brandDark text-white text-xs uppercase tracking-widest py-3 hover:bg-brandGold transition duration-300">
-                    У кошик
-                </button>
-            </div>
-
-            <!-- Товар 2: Delicate Therapy Masque -->
-            <div class="group flex flex-col justify-between">
-                <div class="relative overflow-hidden bg-brandGray aspect-square mb-4">
-                    <img src="image_8X5SdA.png" alt="Delicate Therapy Masque" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
-                </div>
-                <div>
-                    <p class="text-[11px] text-gray-400 uppercase tracking-wider mb-1">Об'єм: 150 мл</p>
-                    <h3 class="text-sm font-medium uppercase tracking-wider text-gray-900 min-h-[40px]">Delicate Therapy Masque</h3>
-                    <p class="text-xs text-gray-500 mt-1 italic">Інтенсивне зволоження та відновлення</p>
-                    <p class="text-sm font-semibold mt-3 text-brandDark">45,00 €</p>
-                </div>
-                <button onclick="addToCart('Delicate Therapy Masque', 45.00)" class="mt-4 w-full bg-brandDark text-white text-xs uppercase tracking-widest py-3 hover:bg-brandGold transition duration-300">
-                    У кошик
-                </button>
-            </div>
-
-            <!-- Товар 3: Precious Softening Conditioner -->
-            <div class="group flex flex-col justify-between">
-                <div class="relative overflow-hidden bg-brandGray aspect-square mb-4">
-                    <img src="image_d9uNTN.png" alt="Precious Softening Conditioner" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
-                </div>
-                <div>
-                    <p class="text-[11px] text-gray-400 uppercase tracking-wider mb-1">Об'єм: 200 мл</p>
-                    <h3 class="text-sm font-medium uppercase tracking-wider text-gray-900 min-h-[40px]">Precious Softening Conditioner</h3>
-                    <p class="text-xs text-gray-500 mt-1 italic">Невагомий догляд і шовковистість</p>
-                    <p class="text-sm font-semibold mt-3 text-brandDark">39,00 €</p>
-                </div>
-                <button onclick="addToCart('Precious Softening Conditioner', 39.00)" class="mt-4 w-full bg-brandDark text-white text-xs uppercase tracking-widest py-3 hover:bg-brandGold transition duration-300">
-                    У кошик
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- СЕКЦІЯ ФІЛОСОФІЇ -->
-    <section id="philosophy" class="bg-brandGray py-20 border-t border-b border-gray-100">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="text-xs font-semibold text-brandGold uppercase tracking-[0.2em] block mb-4">Винятковий догляд</span>
-            <h2 class="text-3xl font-light uppercase tracking-widest mb-6">У чому секрет та унікальність продуктів?</h2>
-            <p class="text-gray-600 font-light leading-relaxed max-w-2xl mx-auto text-sm sm:text-base">
+            <!-- Іконка Кошика -->
+            <div class="header-actions">
+                <button onclick="toggleCart()" class="icon-btn" aria-label="Кошик">
