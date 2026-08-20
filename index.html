@@ -9,108 +9,85 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background-color: #f5f5f4; color: #1c1917; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #f5f5f4; color: #1c1917; line-height: 1.5; -webkit-font-smoothing: antialiased; }
         a { text-decoration: none; color: inherit; }
         
-        /* Promo Banner */
-        .promo-bar { background-color: #0c0a09; color: #ffffff; text-align: center; padding: 10px 16px; font-size: 13px; font-weight: 500; letter-spacing: 0.5px; position: relative; z-index: 60; }
+        /* Акційний банер */
+        .promo-bar { background-color: #0c0a09; color: #ffffff; text-align: center; padding: 10px 16px; font-size: 13px; font-weight: 500; letter-spacing: 0.5px; }
         .promo-bar span { font-weight: 600; color: #d6d3d1; text-decoration: underline; }
 
         .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-        
-        /* Header */
-        .header { position: sticky; top: 0; z-index: 50; background-color: rgba(245, 245, 244, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid #e7e5e4; transition: all 0.3s ease; }
+        .header { position: sticky; top: 0; z-index: 50; background-color: rgba(245, 245, 244, 0.85); backdrop-filter: blur(8px); border-bottom: 1px solid #e7e5e4; }
         .header-body { display: flex; align-items: center; justify-content: space-between; height: 80px; }
-        .logo { font-size: 22px; font-weight: 600; letter-spacing: 3px; color: #0c0a09; transition: opacity 0.3s ease; }
-        .logo:hover { opacity: 0.7; }
+        .logo { font-size: 20px; font-weight: 600; letter-spacing: 2px; color: #0c0a09; }
         .nav { display: flex; gap: 32px; font-size: 14px; font-weight: 500; color: #57534e; }
-        .nav a { position: relative; transition: color 0.3s ease; }
-        .nav a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background-color: #0c0a09; transition: width 0.3s ease; }
-        .nav a:hover { color: #0c0a09; }
-        .nav a:hover::after { width: 100%; }
-        .badge { font-size: 11px; text-transform: uppercase; color: #a8a29e; letter-spacing: 1.5px; border: 1px solid #d6d3d1; padding: 6px 12px; border-radius: 20px; transition: all 0.3s ease; }
-        .badge:hover { border-color: #0c0a09; color: #0c0a09; }
+        .badge { font-size: 12px; text-transform: uppercase; color: #a8a29e; letter-spacing: 1px; }
 
-        /* Hero Section (Без анімацій, тільки статичне фото та текст) */
-        .hero { position: relative; background-color: #1c1917; min-height: 75vh; display: flex; align-items: center; overflow: hidden; }
-        .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.45; mix-blend-mode: multiply; }
+        /* Hero Section з робочим фото */
+        .hero { position: relative; background-color: #0c0a09; min-height: 70vh; display: flex; align-items: center; overflow: hidden; }
+        .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 1; }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(12,10,9,0.75) 0%, rgba(12,10,9,0.3) 60%, rgba(12,10,9,0) 100%); z-index: 2; }
         .hero-content { position: relative; z-index: 10; max-width: 640px; padding: 40px 0; color: #ffffff; }
-        .subtitle { font-size: 12px; text-transform: uppercase; letter-spacing: 3px; color: #d6d3d1; font-weight: 600; margin-bottom: 16px; display: block; }
-        .hero h1 { font-size: 52px; font-weight: 300; color: #ffffff; line-height: 1.15; margin-bottom: 24px; }
-        .hero h1 span { font-style: italic; font-weight: 400; color: #f5f5f4; }
-        .hero p { font-size: 18px; color: #a8a29e; margin-bottom: 32px; font-weight: 300; }
+        .subtitle { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #d6d3d1; font-weight: 500; margin-bottom: 16px; display: block; }
+        .hero h1 { font-size: 48px; font-weight: 300; color: #ffffff; line-height: 1.2; margin-bottom: 24px; }
+        .hero h1 span { font-style: italic; font-weight: 400; }
+        .hero p { font-size: 18px; color: #e7e5e4; margin-bottom: 32px; }
         
-        /* Buttons */
-        .btn { display: inline-flex; align-items: center; justify-content: center; background-color: #ffffff; color: #0c0a09; font-size: 14px; font-weight: 500; padding: 16px 32px; border: none; cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); letter-spacing: 0.5px; }
-        .btn:hover { background-color: #e7e5e4; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
-        .btn:active { transform: translateY(0); }
+        /* Кнопки */
+        .btn { display: inline-flex; align-items: center; justify-content: center; background-color: #ffffff; color: #0c0a09; font-size: 14px; font-weight: 500; padding: 14px 24px; border: none; cursor: pointer; transition: background-color 0.2s ease; }
+        .btn:hover { background-color: #e7e5e4; }
+        .btn-dark { background-color: #0c0a09; color: #ffffff; }
+        .btn-dark:hover { background-color: #292524; }
 
-        /* Sections */
-        .section { padding: 96px 0; }
-        .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #a8a29e; font-weight: 600; margin-bottom: 8px; display: block; }
-        .section h2 { font-size: 36px; font-weight: 300; color: #0c0a09; margin-bottom: 48px; letter-spacing: -0.5px; }
+        /* Секції та сітка */
+        .section { padding: 86px 0; }
+        .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #a8a29e; font-weight: 500; margin-bottom: 8px; display: block; }
+        .section h2 { font-size: 32px; font-weight: 300; color: #0c0a09; margin-bottom: 48px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; }
         
-        /* Products Grid & Cards */
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px; }
-        .product-card { position: relative; display: flex; flex-direction: column; background-color: #ffffff; border: 1px solid #e7e5e4; padding: 24px; border-radius: 4px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); border-color: #d6d3d1; }
+        /* Карточки товарів */
+        .product-card { position: relative; display: flex; flex-direction: column; background-color: #ffffff; border: 1px solid #e7e5e4; padding: 24px; border-radius: 4px; }
         .discount-badge { position: absolute; top: 16px; right: 16px; background-color: #0c0a09; color: #ffffff; font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 2px; z-index: 5; }
-        .product-img-wrapper { aspect-ratio: 1/1; background-color: #fafaf9; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 2px; }
-        .product-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        .product-card:hover .product-img { transform: scale(1.08); }
-        .product-tag { font-size: 12px; color: #a8a29e; text-transform: uppercase; margin-bottom: 4px; font-weight: 500; }
+        .product-img-wrapper { aspect-ratio: 1/1; background-color: #fafaf9; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .product-img { width: 100%; height: 100%; object-fit: cover; }
+        .product-tag { font-size: 12px; color: #a8a29e; text-transform: uppercase; margin-bottom: 4px; }
         .product-title { font-size: 16px; font-weight: 500; color: #0c0a09; margin-bottom: 8px; }
-        .product-desc { font-size: 14px; color: #57534e; margin-bottom: 24px; flex-grow: 1; line-height: 1.6; }
+        .product-desc { font-size: 14px; color: #57534e; margin-bottom: 24px; flex-grow: 1; }
         .product-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid #f5f5f4; }
         .price-box { display: flex; flex-direction: column; }
         .old-price { font-size: 12px; text-decoration: line-through; color: #a8a29e; }
         .product-price { font-size: 16px; font-weight: 600; color: #0c0a09; }
-        .btn-dark { background-color: #0c0a09; color: #ffffff; }
-        .btn-dark:hover { background-color: #292524; }
-        .btn-sm { font-size: 12px; padding: 10px 18px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-sm { font-size: 12px; padding: 8px 16px; text-transform: uppercase; }
 
-        /* Tech Section */
+        /* Додаткові блоки */
         .bg-dark { background-color: #1c1917; color: #f5f5f4; }
-        .bg-dark .section-title { color: #78716c; }
+        .bg-dark .section-title { color: #57534e; }
         .bg-dark h2 { color: #ffffff; }
         .tech-layout { display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center; }
         @media (min-width: 1024px) { .tech-layout { grid-template-columns: 1fr 1fr; } }
-        .tech-text p { color: #a8a29e; margin-bottom: 20px; font-size: 16px; font-weight: 300; line-height: 1.7; }
+        .tech-text p { color: #a8a29e; margin-bottom: 16px; font-size: 16px; }
         .tech-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .tech-img-box { aspect-ratio: 4/5; background-color: #292524; overflow: hidden; position: relative; border-radius: 4px; }
-        .tech-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
-        .tech-img-box:hover .tech-img { transform: scale(1.05); }
-        .tech-img-lbl { position: absolute; bottom: 16px; left: 16px; font-size: 11px; text-transform: uppercase; color: #ffffff; background-color: rgba(12, 10, 9, 0.75); backdrop-filter: blur(4px); padding: 6px 12px; letter-spacing: 1px; }
-
-        /* About Section */
+        .tech-img { width: 100%; height: 100%; object-fit: cover; }
+        .tech-img-lbl { position: absolute; bottom: 16px; left: 16px; font-size: 12px; text-transform: uppercase; color: #ffffff; background-color: rgba(12, 10, 9, 0.6); padding: 4px 8px; }
+        
         .about-layout { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
         @media (min-width: 1024px) { .about-layout { grid-template-columns: 5fr 7fr; } }
         .about-img-box { aspect-ratio: 3/4; background-color: #e7e5e4; overflow: hidden; border-radius: 4px; }
-        .about-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
-        .about-img-box:hover .about-img { transform: scale(1.03); }
-        .quote { font-size: 22px; font-style: italic; color: #44403c; border-left: 2px solid #0c0a09; padding-left: 24px; margin-bottom: 24px; font-weight: 300; }
-
-        /* Delivery Section */
-        .bg-stone { background-color: #e7e5e4; }
-        .delivery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
-        .delivery-card { background-color: #ffffff; border: 1px solid #d6d3d1; padding: 36px; border-radius: 4px; transition: transform 0.3s ease; }
-        .delivery-card:hover { transform: translateY(-4px); }
-        .delivery-time { font-size: 32px; font-weight: 300; color: #0c0a09; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .about-img { width: 100%; height: 100%; object-fit: cover; }
+        .quote { font-size: 20px; font-style: italic; color: #44403c; border-left: 2px solid #d6d3d1; padding-left: 24px; margin-bottom: 24px; }
         
-        /* Footer */
-        .footer { background-color: #0c0a09; color: #a8a29e; padding: 56px 0; border-top: 1px solid #292524; }
+        .bg-stone { background-color: #e7e5e4; text-align: center; }
+        .delivery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+        .delivery-card { background-color: #ffffff; border: 1px solid #d6d3d1; padding: 32px; border-radius: 4px; }
+        .delivery-time { font-size: 28px; font-weight: 300; color: #0c0a09; margin-bottom: 16px; }
+        
+        .footer { background-color: #0c0a09; color: #a8a29e; padding: 48px 0; }
         .footer-body { display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 24px; }
         @media (min-width: 640px) { .footer-body { flex-direction: row; } }
-        .footer-links { display: flex; gap: 24px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
-        .footer-links a { transition: color 0.3s ease; }
-        .footer-links a:hover { color: #ffffff; }
-
-        /* SCROLL ANIMATIONS ONLY FOR CONTENT BELOW HERO */
-        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        .footer-links { display: flex; gap: 24px; font-size: 12px; text-transform: uppercase; }
         
-        @media (max-width: 768px) { .header .nav { display: none; } .hero h1 { font-size: 38px; } }
+        @media (max-width: 768px) { .header .nav { display: none; } }
     </style>
 </head>
 <body>
@@ -134,37 +111,36 @@
         </div>
     </header>
 
-    <!-- Головний екран (Hero) без будь-яких анімацій -->
+    <!-- Головна секція з фотографією -->
     <section class="hero">
         <img src="hero.jpg" class="hero-bg" alt="Shazay Concept">
+        <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content">
                 <span class="subtitle">Diamond Filtered</span>
                 <h1>Догляд, пропущений через <span>діамант</span></h1>
                 <p>Shazay очищує воду через алмазний фільтр перед тим, як вона потрапляє у формулу — так кожна крапля засобу працює з волоссям м'якше та ефективніше.</p>
-                <a href="#products" class="btn">Переглянути продукти зі знижкою →</a>
+                <a href="#products" class="btn">Дивитися продукти зі знижкою →</a>
             </div>
         </div>
     </section>
 
-    <!-- Каталог товарів -->
+    <!-- Каталог продуктів зі знижками -->
     <section id="products" class="section">
         <div class="container">
-            <div class="reveal">
-                <span class="section-title">Лінійка продуктів</span>
-                <h2>Преміальний ритуал догляду зі знижкою 20%</h2>
-            </div>
+            <span class="section-title">Лінійка</span>
+            <h2>Преміальний ритуал догляду зі знижкою 20%</h2>
 
             <div class="products-grid">
                 <!-- Товар 1 -->
-                <div class="product-card reveal">
+                <div class="product-card">
                     <span class="discount-badge">-20%</span>
                     <div class="product-img-wrapper">
-                        <img src="product1.jpg" class="product-img" alt="Moisturizing Leave-In Conditioner">
+                        <img src="product1.jpg" class="product-img" alt="Leave-In">
                     </div>
                     <span class="product-tag">Leave-in</span>
                     <h3 class="product-title">Moisturizing Leave-In Conditioner</h3>
-                    <p class="product-desc">Незмивний догляд для глибокого зволоження по всій довжині без обтяження волосся.</p>
+                    <p class="product-desc">Незмивний догляд для зволоження по всій довжині без обтяження волосся.</p>
                     <div class="product-footer">
                         <div class="price-box">
                             <span class="old-price">1 890 ₴</span>
@@ -175,14 +151,14 @@
                 </div>
 
                 <!-- Товар 2 -->
-                <div class="product-card reveal">
+                <div class="product-card">
                     <span class="discount-badge">-20%</span>
                     <div class="product-img-wrapper">
-                        <img src="product1.jpg" class="product-img" alt="Precious Softening Conditioner">
+                        <img src="product1.jpg" class="product-img" alt="Conditioner">
                     </div>
                     <span class="product-tag">Conditioner</span>
                     <h3 class="product-title">Precious Softening Conditioner</h3>
-                    <p class="product-desc">Змивний кондиціонер для шовковистої м'якості та легкого розчісування після миття.</p>
+                    <p class="product-desc">Змивний кондиціонер для м'якості та легкого розчісування після миття.</p>
                     <div class="product-footer">
                         <div class="price-box">
                             <span class="old-price">1 690 ₴</span>
@@ -193,14 +169,14 @@
                 </div>
 
                 <!-- Товар 3 -->
-                <div class="product-card reveal">
+                <div class="product-card">
                     <span class="discount-badge">-20%</span>
                     <div class="product-img-wrapper">
-                        <img src="product2.jpg" class="product-img" alt="Delicate Therapy Masque">
+                        <img src="product2.jpg" class="product-img" alt="Masque">
                     </div>
                     <span class="product-tag">Masque</span>
                     <h3 class="product-title">Delicate Therapy Masque</h3>
-                    <p class="product-desc">Інтенсивна маска глибокого відновлення для сухого та ослабленого волосся.</p>
+                    <p class="product-desc">Інтенсивна маска глибокого відновлення для сухих та ослаблених волосся.</p>
                     <div class="product-footer">
                         <div class="price-box">
                             <span class="old-price">2 290 ₴</span>
@@ -211,10 +187,10 @@
                 </div>
 
                 <!-- Товар 4 -->
-                <div class="product-card reveal">
+                <div class="product-card">
                     <span class="discount-badge">-20%</span>
                     <div class="product-img-wrapper">
-                        <img src="product1.jpg" class="product-img" alt="Premium Blow-Out Mist">
+                        <img src="product1.jpg" class="product-img" alt="Mist">
                     </div>
                     <span class="product-tag">Mist</span>
                     <h3 class="product-title">Premium Blow-Out Mist</h3>
@@ -235,13 +211,13 @@
     <section id="technology" class="section bg-dark">
         <div class="container">
             <div class="tech-layout">
-                <div class="tech-text reveal">
+                <div class="tech-text">
                     <span class="section-title">Запатентна технологія</span>
                     <h2>Діамантова фільтрація води</h2>
-                    <p>Вода є основою більшості косметичних засобів. Звичайна питна вода може містити мікродомішки, які знижують ефективність активних інгредієнтів.</p>
+                    <p>Вода є основою більшості косметичних засобів. Звичайна вода може містити мікродомішки, які знижують ефективність активних інгредієнтів.</p>
                     <p>Shazay використовує інноваційну німецьку технологію алмазного фільтрування. Це дозволяє отримати кришталево чисту воду, яка ідеально засвоюється кожною волосиною.</p>
                 </div>
-                <div class="tech-gallery reveal">
+                <div class="tech-gallery">
                     <div class="tech-img-box">
                         <img src="tech1.jpg" class="tech-img" alt="Diamond Filter">
                         <span class="tech-img-lbl">Чистота</span>
@@ -259,10 +235,10 @@
     <section id="about" class="section">
         <div class="container">
             <div class="about-layout">
-                <div class="about-img-box reveal">
+                <div class="about-img-box">
                     <img src="about.jpg" class="about-img" alt="Shazay Brand">
                 </div>
-                <div class="reveal">
+                <div>
                     <span class="section-title">Філософія</span>
                     <h2>Німецька якість та турбота про ваше волосся</h2>
                     <p class="quote">«Ми створили Shazay для тих, хто шукає бездоганну якість без компромісів.»</p>
@@ -275,11 +251,9 @@
     <!-- Умови доставки -->
     <section id="delivery" class="section bg-stone">
         <div class="container">
-            <div class="reveal" style="text-align: center;">
-                <span class="section-title">Сервіс</span>
-                <h2>Швидка та зручна доставка</h2>
-            </div>
-            <div class="delivery-grid reveal">
+            <span class="section-title">Сервіс</span>
+            <h2>Швидка та зручна доставка</h2>
+            <div class="delivery-grid" style="margin-top: 32px;">
                 <div class="delivery-card">
                     <div class="delivery-time">1–3 дні</div>
                     <h3>Доставка по Україні</h3>
@@ -308,27 +282,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Скрипт для плавної появи секцій під час скролу -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const reveals = document.querySelectorAll(".reveal");
-
-            const revealOnScroll = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("active");
-                    }
-                });
-            }, {
-                threshold: 0.15
-            });
-
-            reveals.forEach(reveal => {
-                revealOnScroll.observe(reveal);
-            });
-        });
-    </script>
 
 </body>
 </html>
