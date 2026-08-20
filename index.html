@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shazay — Diamond Filtered Haircare</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: #f5f5f4; color: #1c1917; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+        a { text-decoration: none; color: inherit; }
+        .container { max-w: 1280px; margin: 0 auto; padding: 0 24px; }
+        .header { position: sticky; top: 0; z-index: 50; background-color: rgba(245, 245, 244, 0.8); backdrop-filter: blur(8px); border-bottom: 1px solid #e7e5e4; }
+        .header-body { display: flex; align-items: center; justify-content: space-between; height: 80px; }
+        .logo { font-size: 20px; font-weight: 600; letter-spacing: 2px; color: #0c0a09; }
+        .nav { display: flex; gap: 32px; font-size: 14px; font-weight: 500; color: #57534e; }
+        .badge { font-size: 12px; text-transform: uppercase; color: #a8a29e; letter-spacing: 1px; }
+        .hero { position: relative; background-color: #e7e5e4; min-height: 65vh; display: flex; align-items: center; overflow: hidden; }
+        .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; mix-blend-mode: multiply; }
+        .hero-content { position: relative; z-index: 10; max-width: 640px; padding: 40px 0; }
+        .subtitle { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #78716c; font-weight: 500; margin-bottom: 16px; display: block; }
+        .hero h1 { font-size: 48px; font-weight: 300; color: #0c0a09; line-height: 1.2; margin-bottom: 24px; }
+        .hero h1 span { font-style: italic; font-weight: 400; }
+        .hero p { font-size: 18px; color: #57534e; margin-bottom: 32px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; background-color: #0c0a09; color: #ffffff; font-size: 14px; font-weight: 500; padding: 14px 24px; border: none; cursor: pointer; }
+        .section { padding: 86px 0; }
+        .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #a8a29e; font-weight: 500; margin-bottom: 8px; display: block; }
+        .section h2 { font-size: 32px; font-weight: 300; color: #0c0a09; margin-bottom: 48px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; }
+        .product-card { display: flex; flex-direction: column; background-color: #ffffff; border: 1px solid #e7e5e4; padding: 24px; border-radius: 4px; }
+        .product-img-wrapper { aspect-ratio: 1/1; background-color: #fafaf9; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .product-img { max-height: 95%; max-width: 95%; object-fit: contain; }
+        .product-tag { font-size: 12px; color: #a8a29e; text-transform: uppercase; margin-bottom: 4px; }
+        .product-title { font-size: 16px; font-weight: 500; color: #0c0a09; margin-bottom: 8px; }
+        .product-desc { font-size: 14px; color: #57534e; margin-bottom: 24px; flex-grow: 1; }
+        .product-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid #f5f5f4; }
+        .product-price { font-size: 16px; font-weight: 500; color: #0c0a09; }
+        .btn-sm { font-size: 12px; padding: 8px 16px; text-transform: uppercase; }
+        .bg-dark { background-color: #1c1917; color: #f5f5f4; }
+        .bg-dark .section-title { color: #57534e; }
+        .bg-dark h2 { color: #ffffff; }
+        .tech-layout { display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center; }
+        @media (min-width: 1024px) { .tech-layout { grid-template-columns: 1fr 1fr; } }
+        .tech-text p { color: #a8a29e; margin-bottom: 16px; font-size: 16px; }
+        .tech-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .tech-img-box { aspect-ratio: 4/5; background-color: #292524; overflow: hidden; position: relative; border-radius: 4px; }
+        .tech-img { width: 100%; height: 100%; object-fit: cover; }
+        .tech-img-lbl { position: absolute; bottom: 16px; left: 16px; font-size: 12px; text-transform: uppercase; color: #ffffff; background-color: rgba(12, 10, 9, 0.6); padding: 4px 8px; }
+        .about-layout { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
+        @media (min-width: 1024px) { .about-layout { grid-template-columns: 5fr 7fr; } }
+        .about-img-box { aspect-ratio: 3/4; background-color: #e7e5e4; overflow: hidden; border-radius: 4px; }
+        .about-img { width: 100%; height: 100%; object-fit: cover; }
+        .quote { font-size: 20px; font-style: italic; color: #44403c; border-left: 2px solid #d6d3d1; padding-left: 24px; margin-bottom: 24px; }
+        .bg-stone { background-color: #e7e5e4; text-align: center; }
+        .delivery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+        .delivery-card { background-color: #ffffff; border: 1px solid #d6d3d1; padding: 32px; border-radius: 4px; }
+        .delivery-time { font-size: 28px; font-weight: 300; color: #0c0a09; margin-bottom: 16px; }
+        .footer { background-color: #0c0a09; color: #a8a29e; padding: 48px 0; }
+        .footer-body { display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 24px; }
+        @media (min-width: 640px) { .footer-body { flex-direction: row; } }
+        .footer-links { display: flex; gap: 24px; font-size: 12px; text-transform: uppercase; }
+        @media (max-width: 768px) { .header .nav { display: none; } }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-body">
+            <div class="logo">SHAZAY</div>
+            <nav class="nav">
+                <a href="#products">Продукты</a>
+                <a href="#technology">Технология</a>
+                <a href="#about">О бренде</a>
+                <a href="#delivery">Доставка</a>
+            </nav>
+            <div class="badge">Made in Germany</div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <!-- Главный фон -->
+        <img src="4_PSC_Konsistenz.JPG" class="hero-bg" alt="Shazay Concept">
+        <div class="container">
+            <div class="hero-content">
+                <span class="subtitle">Diamond Filtered</span>
+                <h1>Уход, пропущенный через <span>бриллиант</span></h1>
+                <p>Shazay очищает воду через алмазный фильтр перед тем, как она попадёт в формулу — так каждая капля средства работает с волосами мягче и точнее.</p>
+                <a href="#products" class="btn">Смотреть продукты →</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="section">
+        <div class="container">
+            <span class="section-title">Линейка</span>
+            <h2>Четыре средства, один ритуал ухода</h2>
+
+            <div class="products-grid">
+                <!-- Товар 1 -->
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <img src="4_PSC_Konsistenz.JPG" class="product-img" alt="Leave-In">
+                    </div>
+                    <span class="product-tag">Leave-in</span>
+                    <h3 class="product-title">Moisturizing Leave-In Conditioner</h3>
+                    <p class="product-desc">Несмываемый уход для увлажнения по длине без утяжеления волос.</p>
+                    <div class="product-footer">
+                        <span class="product-price">1 890 ₽</span>
+                        <button class="btn btn-sm">В корзину</button>
+                    </div>
+                </div>
+
+                <!-- Товар 2 -->
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <img src="4_PSC_Konsistenz.JPG" class="product-img" alt="Conditioner">
+                    </div>
+                    <span class="product-tag">Conditioner</span>
+                    <h3 class="product-title">Precious Softening Conditioner</h3>
+                    <p class="product-desc">Смываемый кондиционер для мягкости и лёгкого расчёсывания после мытья.</p>
+                    <div class="product-footer">
+                        <span class="product-price">1 690 ₽</span>
+                        <button class="btn btn-sm">В корзину</button>
+                    </div>
+                </div>
+
+                <!-- Товар 3 -->
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <img src="2_DTM_Spiegel.PG" class="product-img" alt="Masque">
+                    </div>
+                    <span class="product-tag">Masque</span>
+                    <h3 class="product-title">Delicate Therapy Masque</h3>
+                    <p class="product-desc">Интенсивная маска глубокого восстановления для сухих и ослабленных волос.</p>
+                    <div class="product-footer">
+                        <span class="product-price">2 290 ₽</span>
+                        <button class="btn btn-sm">В корзину</button>
+                    </div>
+                </div>
+
+                <!-- Товар 4 -->
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <img src="4_PSC_Konsistenz.JPG" class="product-img" alt="Mist">
+                    </div>
+                    <span class="product-tag">Mist</span>
+                    <h3 class="product-title">Premium Blow-Out Mist</h3>
